@@ -11,3 +11,13 @@ merge aio, with diff tags
 - bin-aio:
 - bin-aio:
 - bin-aio:
+
+## quick builds
+
+```bash
+./build_img.sh bin-aio push hotspot-8u202
+./build_img.sh bin-aio push zulu-8u252
+./build_img.sh bin-aio push nexus-v271
+./build_img.sh bin-aio push tomcat-v8.5.55
+
+```

@@ -1,24 +1,25 @@
 ARG repo=docker.io
-FROM ${repo}/infrastlabs/bin-aio:zulu-8u252
+FROM ${repo}/infrastlabs/bin-aio:zulu-8u252 as bin
+FROM ${repo}/infrastlabs/alpine-ext:weak
 MAINTAINER sam <sldevsir@126.com>
-ARG src=jdk-8u162-linux-x64.tar.gz
+# ARG src=jdk-8u162-linux-x64.tar.gz
 ARG dest=/usr/local/soft/java
 
 USER root
-#RUN wget --user=root --password=root http://10.1.1.114:680/temp_trans/pro_env/$src \
-#    && mkdir -p $dest && tar -zxf $src -C $dest \
-#    && rm -f $src
+COPY --from=bin /down/zulu8.46.0.19-ca-jdk8.0.252-linux_x64 $dest/zulujdk1.8.0_252
 
-ADD *.sh /
-RUN sh /build.sh
+# ADD *.sh /
+# RUN sh /build.sh
 
 ##run as root
 USER root
 WORKDIR /
 
-ENV JAVA_HOME=$dest/jdk1.8.0_162 \
-    PATH="$dest/jdk1.8.0_162/bin:$dest/jdk1.8.0_162/jre/bin:$PATH"
 
-#
-ENV JAVA_TOOL_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
-
+ARG jhome=$dest/zulujdk1.8.0_252
+ENV JAVA_HOME=$jhome \
+    PATH="$jhome/bin:$jhome/jre/bin:$PATH"
+RUN echo "PATH=\$JAVA_HOME/bin:\$JAVA_HOME/jre/bin:\$PATH" >> /etc/profile \
+  && source /etc/profile && java -version
+# ENV JAVA_TOOL_OPTIONS="-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport -XX:+IdleTuningCompactOnIdle -XX:+IdleTuningGcOnIdle"
+ENV JAVA_TOOL_OPTIONS="-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"

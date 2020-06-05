@@ -1,13 +1,12 @@
 ARG repo=docker.io
-FROM ${repo}/infrastlabs/bin-aio:hotsopt-8u202
+FROM ${repo}/infrastlabs/bin-aio:hotspot-8u202 as bin
+FROM ${repo}/infrastlabs/alpine-ext:weak
 MAINTAINER sam <sldevsir@126.com>
-ARG src=jdk-8u162-linux-x64.tar.gz
+# ARG src=jdk-8u202-linux-x64.tar.gz
 ARG dest=/usr/local/soft/java
 
 USER root
-#RUN wget --user=root --password=root http://10.1.1.114:680/temp_trans/pro_env/$src \
-#    && mkdir -p $dest && tar -zxf $src -C $dest \
-#    && rm -f $src
+COPY --from=bin /down/jdk1.8.0_202 $dest/jdk1.8.0_202
 
 ADD *.sh /
 RUN sh /build.sh
@@ -16,9 +15,8 @@ RUN sh /build.sh
 USER root
 WORKDIR /
 
-ENV JAVA_HOME=$dest/jdk1.8.0_162 \
-    PATH="$dest/jdk1.8.0_162/bin:$dest/jdk1.8.0_162/jre/bin:$PATH"
-
-#
+ARG jhome=$dest/jdk1.8.0_202
+ENV JAVA_HOME=$jhome \
+    PATH="$jhome/bin:$jhome/jre/bin:$PATH"
 ENV JAVA_TOOL_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
 

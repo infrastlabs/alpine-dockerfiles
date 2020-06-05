@@ -10,6 +10,7 @@ rm -rf $dest/webapps/ROOT/*
 rm -rf $dest/webapps/{docs,examples,host-manager,manager}
 
 #mkdir -p /tmp/zk-cache && chown www:www /tmp/zk-cache
+# setenv.sh
 cat > $dest/bin/setenv.sh <<EOF
 APP_HOME=/data/www #/tmp/zk-cache
 if [ ! "" = "\$APP_HOME" ]; then

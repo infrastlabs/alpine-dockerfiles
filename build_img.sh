@@ -19,20 +19,29 @@ function buildPushImg(){
     local ns=$1
     local image=$2
     local push=$3
-    local version=$ver #$4
+    local tag=$ver #$4
     red1="\033[31m" && red2="\033[0m"
 
-    if [ "" = "$version" ]; then
-      version=latest
+    if [ "" = "$tag" ]; then
+      tag=latest
     fi
 
+    # env-java8-xx, the last be tag; 格式: pre-repos-tags
+    local image0=$image
+    local tag0=$tag
+    if [ "env-java8" == "${image0%-*}" ]; then
+      local image=${image0%-*}
+      local tag=${image0##*-}"-$tag0"
+    fi
+
+    local target=$repo/$ns/$image:$tag
     # NOCAHE="--no-cache"
-    echo -e ">>>==============={{ ${red1}$image${red2} }}>>>build:========================================="
-    docker build $NOCAHE --pull -t $repo/$ns/$image:$version --build-arg repo=$repo --build-arg TAG=$version .
+    echo -e ">>>==============={{ ${red1}$target${red2} }}>>>build:========================================="
+    docker build $NOCAHE --pull -t $target --build-arg repo=$repo --build-arg TAG=$tag .
 
     if [ "push" = "$push" ]; then
-        echo -e ">>>==============={{ ${red1}$image${red2} }}>>>push:========================================="
-        docker push $repo/$ns/$image:$version
+        echo -e ">>>==============={{ ${red1}$target${red2} }}>>>push:========================================="
+        docker push $target
     fi
 
 }
@@ -41,7 +50,7 @@ function doOne(){
     local mod=$1 && local ns=$2 && echo $ns
     test -z $mod && errExit "must buile with one module!"
 
-    #special
+    #special NS
     array=(
         spe-special
     )

@@ -27,6 +27,9 @@ EOF
 cat >> /etc/profile <<EOF
 
 case "\$APP_JVM" in
+  hotspot)
+    source /etc/source-hotspot
+    ;;
   openj9)
     source /etc/source-openj9
     ;;

@@ -26,6 +26,14 @@
 ./build_img.sh env-java8-tomcat push v1.0
 ```
 
+- env-java8
+
+```bash
+ docker run -it --rm registry.cn-shenzhen.aliyuncs.com/infrastlabs/env-java8:jvms-v1.0 java -version
+ docker run -it --rm -e "APP_JVM=openj9" registry.cn-shenzhen.aliyuncs.com/infrastlabs/env-java8:jvms-v1.0 java -version
+ docker run -it --rm -e "APP_JVM=hotspot" registry.cn-shenzhen.aliyuncs.com/infrastlabs/env-java8:jvms-v1.0 java -version
+```
+
 - tomcat
 
 ```bash

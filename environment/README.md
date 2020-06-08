@@ -67,7 +67,9 @@ drwxr-xr-x 5 root root 4.0K 6月   6 14:07 java/
 
 sudo mkdir /usr/local/soft
 sudo ln -s $(pwd)/java /usr/local/soft/java
+```
 
+```bash
 sam @ deb9-2 in .../Development/soft |14:56:45  
 $ source  source-hotspot 
 sam @ deb9-2 in .../Development/soft |14:54:42  

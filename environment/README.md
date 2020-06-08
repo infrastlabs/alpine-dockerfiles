@@ -51,3 +51,47 @@ Picked up JAVA_TOOL_OPTIONS: -XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerS
 05-Jun-2020 18:03:06.172 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/8.5.55
 
 ```
+
+## dev-env
+
+```bash
+docker run -it --rm -v $(pwd):/mnt registry.cn-shenzhen.aliyuncs.com/infrastlabs/env-java8:jvms-v1.0 "cp -a /usr/local/soft/java /etc/source-* /mnt/"
+sam @ deb9-2 in .../Development/soft |14:56:13  
+$ ll
+总用量 16K
+drwxr-xr-x 5 root root 4.0K 6月   6 14:07 java/
+-rw-r--r-- 1 root root  213 6月   6 14:07 source-hotspot
+-rw-r--r-- 1 root root  252 6月   6 14:07 source-openj9
+-rw-r--r-- 1 root root  206 6月   6 14:07 source-zulu
+
+
+sudo mkdir /usr/local/soft
+sudo ln -s $(pwd)/java /usr/local/soft/java
+
+sam @ deb9-2 in .../Development/soft |14:56:45  
+$ source  source-hotspot 
+sam @ deb9-2 in .../Development/soft |14:54:42  
+$ java -version
+    Picked up JAVA_TOOL_OPTIONS: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
+    java version "1.8.0_202"
+    Java(TM) SE Runtime Environment (build 1.8.0_202-b08)
+    Java HotSpot(TM) 64-Bit Server VM (build 25.202-b08, mixed mode)
+sam @ deb9-2 in .../Development/soft |14:56:45  
+$ source  source-openj9 
+sam @ deb9-2 in .../Development/soft |14:56:41  
+$ java -version
+    openjdk version "1.8.0_252"
+    OpenJDK Runtime Environment (build 1.8.0_252-b09)
+    Eclipse OpenJ9 VM (build openj9-0.20.0, JRE 1.8.0 Linux amd64-64-Bit Compressed References 20200416_608 (JIT enabled, AOT enabled)
+    OpenJ9   - 05fa2d361
+    OMR      - d4365f371
+    JCL      - cfa47e66cd5 based on jdk8u252-b09)
+sam @ deb9-2 in .../Development/soft |14:56:45  
+$ source  source-zulu 
+sam @ deb9-2 in .../Development/soft |14:56:51  
+$ java -version
+    Picked up JAVA_TOOL_OPTIONS: -XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport
+    openjdk version "1.8.0_252"
+    OpenJDK Runtime Environment (Zulu 8.46.0.19-CA-linux64) (build 1.8.0_252-b14)
+    OpenJDK 64-Bit Server VM (Zulu 8.46.0.19-CA-linux64) (build 25.252-b14, mixed mode)
+```

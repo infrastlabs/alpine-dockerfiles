@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-#add user
+#add user, gsc
 mkdir -p /data
 useradd -m -d /data/www -s /bin/bash www
-#gosuctl add www in dtl-app-dockerfile
+
+#chpasswd: generate one when build
+# erpasswd root
+# erpasswd entry
+# erpasswd www
 
 #init dir
 chown -R www:www /data/www/
@@ -12,5 +16,9 @@ chown -R www:www /data/www/
 
 #apollo
 # mkdir -p /opt/data && chown www:www -R /opt/data
+
+#gosuctl: root's permision for www
+gsc add www #gosu 
+apk add tini
 
 rm -f /build.sh

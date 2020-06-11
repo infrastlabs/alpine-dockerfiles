@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#echo $@  #tini + gosu
+echo "entry_params: $@"  #tini + gosu
 
 # runDropbear #when $SSHD_ENABLE=true
 
@@ -15,6 +15,7 @@ file2=/tmp/gosu-www.sh
 cat > $file2 <<EOF
 echo "params_www \$@"
 source /etc/profile
+
 #exec "\$@"
 cmd=\$1
 shift
@@ -32,11 +33,11 @@ runDropbear
 # exec "\$@"
 # "\$@"
 
-exec gosu www bash -c "$file2 \"$@\"" && rm -f $file2
+exec gosu www bash -c "$file2 $@" && rm -f $file2
 # gsc drop #drop root's permision
 EOF
 chmod +x $file
 
-printf "\n>>gosu exec as root--------------------\n"
+# printf "\n>>gosu exec as root--------------------\n"
 # gosu root tini -s bash -c "$file \"$@\"" && rm -f $file
-exec gosu root bash -c "$file \"$@\"" && rm -f $file
+exec gosu root bash -c "$file $@" && rm -f $file

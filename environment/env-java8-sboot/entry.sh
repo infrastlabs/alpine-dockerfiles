@@ -11,11 +11,14 @@
 # exec tini "$@"
 
 #scripts to run(www)
-file2=/tmp/gosu-root.sh
+file2=/tmp/gosu-www.sh
 cat > $file2 <<EOF
 echo "params_www \$@"
 source /etc/profile
-exec "\$@"
+#exec "\$@"
+cmd=\$1
+shift
+exec \$cmd "\$@"
 EOF
 chmod +x $file2
 
@@ -29,7 +32,7 @@ runDropbear
 # exec "\$@"
 # "\$@"
 
-exec gosu www bash -c $file2 && rm -f $file2
+exec gosu www bash -c "$file2 \"$@\"" && rm -f $file2
 # gsc drop #drop root's permision
 EOF
 chmod +x $file

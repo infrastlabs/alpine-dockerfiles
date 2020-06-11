@@ -14,6 +14,8 @@
 file2=/tmp/gosu-root.sh
 cat > $file2 <<EOF
 echo "params_www \$@"
+source /etc/profile
+exec "\$@"
 EOF
 chmod +x $file2
 
@@ -23,11 +25,11 @@ cat > $file <<EOF
 echo "params_root \$@"
 runDropbear
 
-source /etc/profile
-exec "\$@"
-#"\$@"
+# source /etc/profile
+# exec "\$@"
+# "\$@"
 
-# gosu www bash -c $file2 && rm -f $file2
+exec gosu www bash -c $file2 && rm -f $file2
 # gsc drop #drop root's permision
 EOF
 chmod +x $file

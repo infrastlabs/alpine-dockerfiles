@@ -32,4 +32,5 @@ EOF
 chmod +x $file
 
 printf "\n>>gosu exec as root--------------------\n"
-gosu root tini -s bash -c "$file \"$@\"" && rm -f $file
+# gosu root tini -s bash -c "$file \"$@\"" && rm -f $file
+gosu root bash -c "$file \"$@\"" && rm -f $file

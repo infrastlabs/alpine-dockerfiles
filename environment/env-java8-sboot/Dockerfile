@@ -10,3 +10,4 @@ RUN sh /build.sh
 ##run as www
 USER www
 WORKDIR /
+ENTRYPOINT ["/sbin/tini", "/entry.sh"]
